@@ -5,9 +5,15 @@ const commands = require('./commands');
 const ERROR = 'error';
 const SUCCESS = 'success';
 
+let genericResponseObject = {
+    status: SUCCESS,
+    data: 0
+};
+
 /* GET home page. */
 router.get('/', (req, res) => {
-    res.json({status: 'success', message: 'HAI'});
+    genericResponseObject.message = 'HAI';
+    return res.json(genericResponseObject);
 });
 
 router.post('/:text', (req, res) => {
@@ -21,11 +27,8 @@ router.post('/:text', (req, res) => {
         });
     }
 
-    return res.json({
-        status: SUCCESS,
-        data: commands[receivedText]
-    });
-
+    genericResponseObject.data = commands[receivedText];
+    return res.json(genericResponseObject);
 });
 
 module.exports = router;
